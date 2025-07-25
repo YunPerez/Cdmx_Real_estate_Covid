@@ -1,0 +1,121 @@
+model:
+  model_name: xgboost
+  purpose: hyperopt
+  hyperparameters:
+    objective: reg:squarederror
+    eval_metric: mae
+    booster: gbtree
+    eta: 0.31
+    max_depth: 10
+    nthread: -1
+    seed: 42
+    lambda: 10
+    subsample: 1
+  training:
+    num_boost_round: 1000
+    early_stopping_rounds: 25
+    verbose_eval: 50
+  data:
+    split_type: random
+    train_size: 0.8
+    validation_size: 0.1
+    stratify: property_type_id
+    best_percentage: 0.99
+    # n_rows: 10000
+  target: 
+    ppsm_saleable: log
+  features:
+    # controls
+      half_bathrooms: identity
+      full_bathrooms: identity
+      remaining_useful_life: identity
+      saleable_area: identity
+      land_area: identity
+      property_type_id: identity
+      parking_lots: identity
+      urban_proximity_id: identity
+      # time
+      quarters_since_first_appraisal: identity
+      # space
+      hex_embedding_1_d16_v2: identity
+      hex_embedding_2_d16_v2: identity
+      hex_embedding_3_d16_v2: identity
+      hex_embedding_4_d16_v2: identity
+      hex_embedding_5_d16_v2: identity
+      hex_embedding_6_d16_v2: identity
+      hex_embedding_7_d16_v2: identity
+      hex_embedding_8_d16_v2: identity
+      hex_embedding_9_d16_v2: identity
+      hex_embedding_10_d16_v2: identity
+      hex_embedding_11_d16_v2: identity
+      hex_embedding_12_d16_v2: identity
+      hex_embedding_13_d16_v2: identity
+      hex_embedding_14_d16_v2: identity
+      hex_embedding_15_d16_v2: identity
+      hex_embedding_16_d16_v2: identity
+categorical_recasters:
+  equipment_id:
+    1: 'low'
+    2: 'medium'
+    3: 'high'
+    4: 'perfect'
+  potable_water_service_id:
+    0: 'does_not_apply'
+    1: 'exists'
+    2: 'not_exist'
+    3: 'not_exist'
+  elevator_service_id:
+    0: 'does_not_apply'
+    1: 'exists'
+    2: 'not_exist'
+  lighting_service_id:
+    0: 'does_not_apply'
+    1: 'a'
+    2: 'b'
+    3: 'c'
+  road_materials_id:
+    0: 'does_not_apply'
+    1: 'terrace'
+    2: 'asphalt'
+    3: 'concrete'
+    4: 'cobblestone'
+    5: 'paver'
+    6: 'other'
+    7: 'not_exist'
+    8: 'permeable_pavement'
+  urban_proximity_id:
+    1: 'centric'
+    2: 'intermediate'
+    3: 'peripheral'
+    4: 'expansion'
+    5: 'rural'
+  property_type_id:
+    2: 'house'
+    3: 'house_on_condominium'
+    4: 'apartment'
+  telephone_service_supply_id:
+    0: 'does_not_apply'
+    1: 'aerial'
+    2: 'underground'
+    3: 'not_exist'
+    4: 'not_exist'
+    5: 'not_exist'
+  sidewalk_id:
+    0: 'does_not_apply'
+    1: 'concrete'
+    2: 'paver'
+    3: 'cobblestone'
+    4: 'other'
+    5: 'not_exist'
+  electrical_supply_service_id:
+    0: 'does_not_apply'
+    1: 'with_suminister'
+    2: 'without_suminister'
+    3: 'other'
+mlflow:
+  tracking_uri: http://127.0.0.1:5000
+  port: 8080
+  experiment_name: 'housing_valuation_index'
+  feature_importance:
+    top_n: 20
+    do_plot: true
